@@ -1,5 +1,6 @@
 const {Schema,model} = require('mongoose');
 const { randomBytes, createHmac } = require('crypto');
+const { createTokenForUser } = require('../services/authentication');
 
 
 
@@ -62,7 +63,8 @@ userSchema.static('matchPassword',async function(email,password){
     .digest("hex");
     if(userProvidedHash!==hashedPassword) throw new Error("Authentication failed");
 
-    return user;
+    const token = createTokenForUser(user);
+    return token;
 
 
 

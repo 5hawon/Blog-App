@@ -14,11 +14,11 @@ router.get('/signup',(req,res)=>{
 router.post('/signin',async(req,res)=>{
     const {email, password} = req.body;
     console.log(email, password);
-    const user = await User.matchPassword(email, password);
+    const token = await User.matchPassword(email, password);
 
-    console.log('User: ',user);
+    
 
-    res.redirect('/')
+    return res.cookie("token",token).redirect('/');
 
 
 })
